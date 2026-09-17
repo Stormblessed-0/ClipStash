@@ -1,0 +1,37 @@
+name: Release
+
+# Pushing a tag like v1.2.3 builds the app and attaches ClipStash-1.2.3.zip
+# to a GitHub Release so users can download it directly.
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode.app
+
+      - name: Build app bundle
+        run: scripts/build-app.sh "${GITHUB_REF_NAME#v}"
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/ClipStash-*.zip
+          generate_release_notes: true
+          body: |
+            ## Install
+            1. Download `ClipStash-*.zip` below and unzip it.
+            2. Drag **ClipStash.app** into your **Applications** folder.
+            3. First launch: right-click the app → **Open** → **Open** (the app is not notarized).
+            4. Grant **Accessibility** access when prompted so items paste automatically.
+
+            Press **⌃'** (Control + apostrophe) to open your clipboard history.

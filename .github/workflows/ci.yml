@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode.app
+
+      - name: Build app bundle
+        run: scripts/build-app.sh "0.0.0-ci"
+
+      - name: Upload build
+        uses: actions/upload-artifact@v4
+        with:
+          name: ClipStash-ci
+          path: dist/ClipStash-*.zip
+          retention-days: 7
