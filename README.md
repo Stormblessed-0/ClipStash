@@ -100,7 +100,7 @@ Requires macOS 13 or newer and either Xcode or the Xcode Command Line Tools
 (`xcode-select --install`). No other dependencies.
 
 ```bash
-git clone <this repository>
+git clone https://github.com/Stormblessed-0/ClipStash.git
 cd ClipStash
 scripts/build-app.sh
 open dist
