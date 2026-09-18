@@ -17,7 +17,7 @@ struct SettingsView: View {
 
     private let refreshTimer = Timer.publish(every: 2, on: .main, in: .common).autoconnect()
 
-    static let repositoryURL = URL(string: "https://github.com/dominic-barnard/ClipStash")!
+    static let repositoryURL = URL(string: "https://github.com/Stormblessed-0/ClipStash")!
 
     var body: some View {
         Form {
