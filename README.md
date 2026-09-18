@@ -45,6 +45,23 @@ is no account, no sync, no network access of any kind.
    System Settings → Privacy & Security → Accessibility → enable ClipStash.
 5. Press **⌃'** and start using it.
 
+### Accessibility keeps asking?
+
+macOS ties an Accessibility grant to the app's code signature. If ClipStash is
+enabled in the Accessibility list but still prompts, the entry is stale
+(usually because the app was replaced by a different build). Fix it in
+System Settings → Privacy & Security → Accessibility: select ClipStash, click
+**−** to remove it, then trigger a paste from ClipStash and turn the new entry
+on. Alternatively, run this in Terminal to remove the stale entry:
+
+```bash
+tccutil reset Accessibility com.clipstash.app
+```
+
+Release builds are signed with a requirement pinned to the bundle identifier
+rather than to one exact binary, so updating to a newer version keeps the
+grant valid.
+
 ### Login item
 
 ClipStash registers itself as a login item the first time it runs. You will see

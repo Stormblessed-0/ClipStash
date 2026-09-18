@@ -64,9 +64,16 @@ if [ -f Resources/AppIcon.icns ]; then
     cp Resources/AppIcon.icns "$APP/Contents/Resources/AppIcon.icns"
 fi
 
-# Ad-hoc signature: enough for macOS to run the app locally and to keep
-# Accessibility / Login Item grants stable between launches.
-codesign --force --deep --sign - --identifier com.clipstash.app "$APP"
+# Ad-hoc signature with a stable designated requirement.
+#
+# By default an ad-hoc signature's requirement is the hash of the exact
+# binary, so every rebuild or update looks like a different app to macOS and
+# the user's Accessibility grant silently stops matching. Pinning the
+# requirement to the bundle identifier keeps the grant valid across updates.
+codesign --force --deep --sign - \
+    --identifier com.clipstash.app \
+    --requirements '=designated => identifier "com.clipstash.app"' \
+    "$APP"
 
 ZIP="$DIST/$APP_NAME-$VERSION.zip"
 ditto -c -k --keepParent "$APP" "$ZIP"

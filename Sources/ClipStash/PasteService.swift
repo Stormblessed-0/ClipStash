@@ -65,10 +65,18 @@ final class PasteService {
         }
     }
 
+    /// Whether the system Accessibility prompt has been shown this session.
+    /// It is shown at most once per launch so a missing grant never turns
+    /// into a prompt on every single selection.
+    private var hasPromptedForAccessibility = false
+
     private func sendPasteKeystroke() {
         guard Self.isAccessibilityTrusted else {
             // The item is already on the clipboard, so the user can still ⌘V by hand.
-            Self.requestAccessibility()
+            if !hasPromptedForAccessibility {
+                hasPromptedForAccessibility = true
+                Self.requestAccessibility()
+            }
             return
         }
         let source = CGEventSource(stateID: .combinedSessionState)
