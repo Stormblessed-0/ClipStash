@@ -10,7 +10,7 @@ is no account, no sync, no network access of any kind.
 ## Features
 
 - **Records text and images** copied from any app, de-duplicated.
-- **⌃' (Control + apostrophe)** opens your history anywhere. The shortcut is
+- **⌃V (Control + V)** opens your history anywhere. The shortcut is
   configurable in Settings.
 - **Select an item and it is pasted** into the text field you were in, and it
   becomes the current clipboard item. Type to search, arrow keys to move,
@@ -43,7 +43,7 @@ is no account, no sync, no network access of any kind.
    lets it press ⌘V in the app you were using. Without it, selecting an item
    still copies it to the clipboard; you just paste by hand.
    System Settings → Privacy & Security → Accessibility → enable ClipStash.
-5. Press **⌃'** and start using it.
+5. Press **⌃V** (Control + V) and start using it.
 
 ### Accessibility keeps asking?
 
@@ -72,7 +72,7 @@ ClipStash Settings, or from the menu bar menu.
 
 | Action                        | How                                  |
 | ----------------------------- | ------------------------------------ |
-| Open history                  | ⌃' (configurable), or menu bar icon  |
+| Open history                  | ⌃V (configurable), or menu bar icon  |
 | Filter                        | Just start typing                    |
 | Move selection                | ↑ / ↓                                |
 | Paste selected item           | ↩ or click                           |

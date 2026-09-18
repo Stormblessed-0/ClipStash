@@ -61,7 +61,7 @@ struct SettingsView: View {
             }
             Text(isRecording
                  ? "Hold one or more of ⌃ ⌥ ⇧ ⌘ and press a key. Press esc to cancel."
-                 : "The default is ⌃' (Control + apostrophe). The shortcut must include at least one modifier key.")
+                 : "The default is ⌃V (Control + V). The shortcut must include at least one modifier key.")
                 .font(.caption)
                 .foregroundStyle(.secondary)
         } header: {

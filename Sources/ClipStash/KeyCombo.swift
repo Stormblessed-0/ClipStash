@@ -7,8 +7,9 @@ struct KeyCombo: Codable, Equatable {
     var keyCode: UInt32
     var carbonModifiers: UInt32
 
-    /// Control + ' (apostrophe / single quote).
-    static let defaultCombo = KeyCombo(keyCode: UInt32(kVK_ANSI_Quote), carbonModifiers: UInt32(controlKey))
+    /// Control + V. Familiar from Windows, and macOS only uses it for an
+    /// obscure "page down" text binding.
+    static let defaultCombo = KeyCombo(keyCode: UInt32(kVK_ANSI_V), carbonModifiers: UInt32(controlKey))
 
     init(keyCode: UInt32, carbonModifiers: UInt32) {
         self.keyCode = keyCode
@@ -31,7 +32,7 @@ struct KeyCombo: Codable, Equatable {
         return mods
     }
 
-    /// Human readable, e.g. "⌃'" or "⌘⇧V".
+    /// Human readable, e.g. "⌃V" or "⌘⇧V".
     var displayString: String {
         var s = ""
         if carbonModifiers & UInt32(controlKey) != 0 { s += "⌃" }

@@ -34,4 +34,4 @@ jobs:
             3. First launch: right-click the app → **Open** → **Open** (the app is not notarized).
             4. Grant **Accessibility** access when prompted so items paste automatically.
 
-            Press **⌃'** (Control + apostrophe) to open your clipboard history.
+            Press **⌃V** (Control + V) to open your clipboard history.
