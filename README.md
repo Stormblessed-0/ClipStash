@@ -9,7 +9,13 @@ is no account, no sync, no network access of any kind.
 
 ## Features
 
-- **Records text and images** copied from any app, de-duplicated.
+- **Records text and images** copied from any app, de-duplicated. Images keep
+  their original JPEG or PNG encoding.
+- **Records files copied in Finder** by location. Select one and paste it in
+  Finder to duplicate it, or into Mail, Slack, or an upload field to attach it.
+  Only the path is stored, never the file itself, so entries for files that are
+  later moved or deleted show as *Missing*. Turn this off in Settings if you
+  don't want it.
 - **⌃V (Control + V)** opens your history anywhere. The shortcut is
   configurable in Settings.
 - **Select an item and it is pasted** into the text field you were in, and it
@@ -86,13 +92,26 @@ ClipStash Settings, or from the menu bar menu.
 
 ```
 ~/Library/Application Support/ClipStash/
-├── history.json     ordered list of entries (newest first)
-└── images/          PNG files for copied images
+├── history.json          ordered list of entries (newest first)
+├── history.pre-1.1.json  one-time backup made before 1.1 first ran (see below)
+└── images/               PNG/JPEG files for copied images
 ~/Library/Preferences/com.clipstash.app.plist   your settings
 ```
 
 Delete that folder (or use **Clear All**) and the history is gone. Nothing is
 stored anywhere else.
+
+### Rolling back to 1.0.0
+
+Version 1.1 added file entries to `history.json`. ClipStash 1.0.0 cannot read a
+history containing them, so before 1.1 writes anything it saves a copy of the
+old file as `history.pre-1.1.json`. To go back:
+
+1. Quit ClipStash and install `ClipStash-1.0.0.zip` from Releases.
+2. In `~/Library/Application Support/ClipStash/`, replace `history.json` with
+   `history.pre-1.1.json` (rename it). Anything copied while running 1.1 is not
+   in that backup.
+3. Launch 1.0.0.
 
 ## Build from source
 

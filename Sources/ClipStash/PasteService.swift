@@ -16,9 +16,11 @@ final class PasteService {
     /// Copies `item` to the clipboard, makes it the most recent history entry,
     /// and if `paste` is true sends ⌘V to `target` (or the frontmost app).
     func select(_ item: ClipItem, target: NSRunningApplication?, paste: Bool) {
-        writeToPasteboard(item)
+        let wrote = writeToPasteboard(item)
         store.moveToTop(item.id)
-        guard paste else { return }
+        // Nothing usable (for example a file that no longer exists): leave the
+        // clipboard alone and do not send a keystroke.
+        guard wrote, paste else { return }
 
         if let target, !target.isActive {
             if #available(macOS 14.0, *) {
@@ -33,18 +35,49 @@ final class PasteService {
         }
     }
 
-    private func writeToPasteboard(_ item: ClipItem) {
+    /// Returns false when the item could not be placed on the pasteboard.
+    @discardableResult
+    private func writeToPasteboard(_ item: ClipItem) -> Bool {
         let pasteboard = NSPasteboard.general
-        pasteboard.clearContents()
+        var wrote = false
         switch item.kind {
         case .text:
-            pasteboard.setString(item.text ?? "", forType: .string)
+            pasteboard.clearContents()
+            wrote = pasteboard.setString(item.text ?? "", forType: .string)
+
         case .image:
-            if let data = store.imageData(for: item), let image = NSImage(data: data) {
-                pasteboard.writeObjects([image])
+            // Offer the original bytes (JPEG or PNG) plus TIFF, which macOS
+            // can translate into whatever flavor the receiving app asks for.
+            guard let data = store.imageData(for: item), let image = NSImage(data: data) else { break }
+            let originalType = store.imagePasteboardType(for: item)
+            pasteboard.clearContents()
+            let pasteboardItem = NSPasteboardItem()
+            pasteboardItem.setData(data, forType: originalType)
+            if let tiff = image.tiffRepresentation {
+                pasteboardItem.setData(tiff, forType: .tiff)
             }
+            wrote = pasteboard.writeObjects([pasteboardItem])
+
+        case .file:
+            // One pasteboard item per file, each carrying its file URL. The
+            // first item also carries the file names as plain text so pasting
+            // into a text field yields something sensible.
+            let urls = item.existingFileURLs
+            guard !urls.isEmpty else { break }
+            pasteboard.clearContents()
+            let names = urls.map(\.lastPathComponent).joined(separator: "\n")
+            let pasteboardItems: [NSPasteboardItem] = urls.enumerated().map { index, url in
+                let pasteboardItem = NSPasteboardItem()
+                pasteboardItem.setString(url.absoluteString, forType: .fileURL)
+                if index == 0 {
+                    pasteboardItem.setString(names, forType: .string)
+                }
+                return pasteboardItem
+            }
+            wrote = pasteboard.writeObjects(pasteboardItems)
         }
         monitor.markOwnChange()
+        return wrote
     }
 
     // MARK: - Accessibility

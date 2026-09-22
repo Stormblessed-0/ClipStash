@@ -42,6 +42,8 @@ final class HistoryViewModel: ObservableObject {
             case .image:
                 return "image".localizedCaseInsensitiveContains(query)
                     || item.preview.localizedCaseInsensitiveContains(query)
+            case .file:
+                return (item.filePaths ?? []).contains { $0.localizedCaseInsensitiveContains(query) }
             }
         }
     }

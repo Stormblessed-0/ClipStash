@@ -152,6 +152,16 @@ struct HistoryRow: View {
 
     @State private var isHovering = false
 
+    private var kindSymbol: String {
+        switch item.kind {
+        case .text: return "text.alignleft"
+        case .image: return "photo"
+        case .file: return "doc"
+        }
+    }
+
+    private var isMissing: Bool { item.hasMissingFiles }
+
     private static let relativeFormatter: RelativeDateTimeFormatter = {
         let f = RelativeDateTimeFormatter()
         f.unitsStyle = .short
@@ -160,7 +170,7 @@ struct HistoryRow: View {
 
     var body: some View {
         HStack(alignment: .top, spacing: 10) {
-            Image(systemName: item.kind == .image ? "photo" : "text.alignleft")
+            Image(systemName: kindSymbol)
                 .font(.system(size: 12, weight: .semibold))
                 .foregroundStyle(isSelected ? Color.white : Color.secondary)
                 .frame(width: 22, height: 22)
@@ -188,11 +198,32 @@ struct HistoryRow: View {
                     } else {
                         Text(item.preview).font(.system(size: 13))
                     }
+                case .file:
+                    HStack(spacing: 8) {
+                        if let thumbnail {
+                            Image(nsImage: thumbnail)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 44, height: 44)
+                                .clipShape(RoundedRectangle(cornerRadius: 4))
+                        }
+                        Text(item.preview)
+                            .font(.system(size: 13))
+                            .lineLimit(2)
+                    }
                 }
-                Text("\(Self.relativeFormatter.localizedString(for: item.createdAt, relativeTo: Date())) · \(item.detail)")
-                    .font(.caption2)
-                    .foregroundStyle(isSelected ? Color.white.opacity(0.8) : Color.secondary)
-                    .lineLimit(1)
+                HStack(spacing: 4) {
+                    if isMissing {
+                        Label("Missing", systemImage: "exclamationmark.triangle.fill")
+                            .foregroundStyle(isSelected ? Color.white : Color.orange)
+                            .help("The file has been moved or deleted, so it can no longer be pasted.")
+                    }
+                    Text("\(Self.relativeFormatter.localizedString(for: item.createdAt, relativeTo: Date())) · \(item.detail)")
+                        .lineLimit(1)
+                        .truncationMode(.middle)
+                }
+                .font(.caption2)
+                .foregroundStyle(isSelected ? Color.white.opacity(0.8) : Color.secondary)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
 

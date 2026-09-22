@@ -95,6 +95,11 @@ struct SettingsView: View {
                 .font(.caption)
                 .foregroundStyle(.secondary)
 
+            Toggle("Record files copied in Finder", isOn: $settings.recordFiles)
+            Text("Stores where the file is, not a copy of it. If the file is later moved or deleted, its entry shows as Missing and cannot be pasted.")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+
             Stepper(value: $settings.maxItems, in: 50...5000, step: 50) {
                 Text("Keep up to \(settings.maxItems) items")
             }

@@ -10,7 +10,13 @@ final class AppSettings: ObservableObject {
         static let hotKey = "hotKey"
         static let maxItems = "maxItems"
         static let pasteOnSelect = "pasteOnSelect"
+        static let recordFiles = "recordFiles"
         static let hasLaunchedBefore = "hasLaunchedBefore"
+    }
+
+    /// When true, files copied in Finder are recorded (by location, not content).
+    @Published var recordFiles: Bool {
+        didSet { defaults.set(recordFiles, forKey: Keys.recordFiles) }
     }
 
     private let defaults = UserDefaults.standard
@@ -49,6 +55,7 @@ final class AppSettings: ObservableObject {
         let storedMax = defaults.integer(forKey: Keys.maxItems)
         maxItems = storedMax > 0 ? storedMax : 500
         pasteOnSelect = defaults.object(forKey: Keys.pasteOnSelect) as? Bool ?? true
+        recordFiles = defaults.object(forKey: Keys.recordFiles) as? Bool ?? true
     }
 
     func resetHotKeyToDefault() {
