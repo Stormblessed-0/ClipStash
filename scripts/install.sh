@@ -34,28 +34,28 @@ DEST="$DEST_DIR/$APP_NAME"
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
 
-say "Downloading the latest ClipStash release…"
+say "Downloading the latest ClipStash release..."
 curl -fL --progress-bar -o "$TMP/ClipStash.zip" "$ZIP_URL" \
     || fail "Download failed. Check your connection or visit https://github.com/$REPO/releases"
 
-say "Unpacking…"
+say "Unpacking..."
 ditto -x -k "$TMP/ClipStash.zip" "$TMP/unpacked"
 [ -d "$TMP/unpacked/$APP_NAME" ] || fail "The download did not contain $APP_NAME."
 
 if pgrep -xq ClipStash; then
-    say "Quitting the running copy of ClipStash…"
+    say "Quitting the running copy of ClipStash..."
     pkill -x ClipStash || true
     sleep 1
 fi
 
-say "Installing to $DEST…"
+say "Installing to ${DEST}..."
 rm -rf "$DEST"
 ditto "$TMP/unpacked/$APP_NAME" "$DEST"
 
 # Remove the quarantine flag that makes Gatekeeper block unsigned downloads.
 xattr -dr com.apple.quarantine "$DEST" 2>/dev/null || true
 
-say "Launching ClipStash…"
+say "Launching ClipStash..."
 open "$DEST"
 
 VERSION="$(defaults read "$DEST/Contents/Info.plist" CFBundleShortVersionString 2>/dev/null || echo "")"
