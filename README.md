@@ -10,7 +10,10 @@ is no account, no sync, no network access of any kind.
 ## Features
 
 - **Records text and images** copied from any app, de-duplicated. Images keep
-  their original JPEG or PNG encoding.
+  their original JPEG or PNG encoding. Many apps (Slack, browsers) put photos
+  on the clipboard as multi-megabyte PNGs; the optional **Convert large images
+  to JPEG** setting stores those as JPEG instead, typically 5–10× smaller. It is
+  off by default and never touches images with transparency.
 - **Records files copied in Finder** by location. Select one and paste it in
   Finder to duplicate it, or into Mail, Slack, or an upload field to attach it.
   Only the path is stored, never the file itself, so entries for files that are

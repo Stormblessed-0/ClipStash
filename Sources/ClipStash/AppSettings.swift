@@ -11,12 +11,19 @@ final class AppSettings: ObservableObject {
         static let maxItems = "maxItems"
         static let pasteOnSelect = "pasteOnSelect"
         static let recordFiles = "recordFiles"
+        static let compressLargeImages = "compressLargeImages"
         static let hasLaunchedBefore = "hasLaunchedBefore"
     }
 
     /// When true, files copied in Finder are recorded (by location, not content).
     @Published var recordFiles: Bool {
         didSet { defaults.set(recordFiles, forKey: Keys.recordFiles) }
+    }
+
+    /// When true, large opaque images are stored as JPEG instead of as copied.
+    /// Off by default so images are kept exactly as the source app provided them.
+    @Published var compressLargeImages: Bool {
+        didSet { defaults.set(compressLargeImages, forKey: Keys.compressLargeImages) }
     }
 
     private let defaults = UserDefaults.standard
@@ -56,6 +63,7 @@ final class AppSettings: ObservableObject {
         maxItems = storedMax > 0 ? storedMax : 500
         pasteOnSelect = defaults.object(forKey: Keys.pasteOnSelect) as? Bool ?? true
         recordFiles = defaults.object(forKey: Keys.recordFiles) as? Bool ?? true
+        compressLargeImages = defaults.object(forKey: Keys.compressLargeImages) as? Bool ?? false
     }
 
     func resetHotKeyToDefault() {

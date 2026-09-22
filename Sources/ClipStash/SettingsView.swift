@@ -100,6 +100,13 @@ struct SettingsView: View {
                 .font(.caption)
                 .foregroundStyle(.secondary)
 
+            Toggle("Convert large images to JPEG", isOn: $settings.compressLargeImages)
+            Text(settings.compressLargeImages
+                 ? "Photos over 1 MB with no transparency are saved as JPEG, usually 5–10× smaller. Applies to newly copied images only."
+                 : "Off: images are stored exactly as copied. Turning this on saves a lot of space when copying photos, which many apps put on the clipboard as large PNGs.")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+
             Stepper(value: $settings.maxItems, in: 50...5000, step: 50) {
                 Text("Keep up to \(settings.maxItems) items")
             }

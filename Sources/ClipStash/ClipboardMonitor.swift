@@ -76,8 +76,11 @@ final class ClipboardMonitor {
         }
 
         // 3. Image data.
-        if let payload = Self.imagePayload(from: pasteboard, types: types) {
+        if var payload = Self.imagePayload(from: pasteboard, types: types) {
             guard payload.data.count <= Self.maxImageBytes else { return }
+            if AppSettings.shared.compressLargeImages {
+                payload = ImageCompressor.compressIfWorthwhile(payload)
+            }
             store.addImage(data: payload.data, fileExtension: payload.fileExtension, width: payload.width, height: payload.height)
         }
     }
