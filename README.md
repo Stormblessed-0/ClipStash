@@ -7,6 +7,21 @@ ClipStash sits in your menu bar, quietly remembers everything you copy, and
 gives it back to you with a keystroke. **Everything stays on your Mac.** There
 is no account, no sync, no network access of any kind.
 
+## Download
+
+**[⬇ Download ClipStash.zip](https://github.com/Stormblessed-0/ClipStash/releases/latest/download/ClipStash.zip)**
+(latest release, macOS 13 or newer, Apple Silicon and Intel)
+
+Or install from Terminal with one command, which also skips the first-launch
+security warning:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/Stormblessed-0/ClipStash/main/scripts/install.sh | bash
+```
+
+The green **Code** button at the top of this page downloads the *source code*,
+not the app. Use the link above to get the app.
+
 ## Features
 
 - **Records text and images** copied from any app, de-duplicated. Images keep
@@ -35,8 +50,23 @@ is no account, no sync, no network access of any kind.
 
 ## Install
 
-1. Download the latest `ClipStash-x.y.z.zip` from the
-   [Releases](../../releases) page and unzip it.
+### Option A: one command (recommended)
+
+Open Terminal (⌘Space, type "Terminal") and paste:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/Stormblessed-0/ClipStash/main/scripts/install.sh | bash
+```
+
+The script downloads the latest release, puts ClipStash in Applications (or
+`~/Applications` if you are not an admin), clears the download quarantine flag
+so macOS does not block it, and launches it. It never asks for a password. You
+can read exactly what it does in [scripts/install.sh](scripts/install.sh).
+
+### Option B: download and drag
+
+1. [Download ClipStash.zip](https://github.com/Stormblessed-0/ClipStash/releases/latest/download/ClipStash.zip)
+   and unzip it.
 2. Move **ClipStash.app** to your **Applications** folder. If you are not an
    administrator on your Mac, use `~/Applications` in your home folder instead
    (create it if it does not exist).
@@ -47,18 +77,15 @@ is no account, no sync, no network access of any kind.
    "ClipStash was blocked", then **Open** in the dialog that follows.
    (On macOS 13 and 14, right-click → Open → Open also works.)
 
-   If you prefer Terminal, this does the same thing and needs no admin rights
-   (adjust the path if you used `~/Applications`):
+### After either option
 
-   ```bash
-   xattr -dr com.apple.quarantine /Applications/ClipStash.app
-   ```
-
-4. On first launch ClipStash asks for **Accessibility** access. This is what
-   lets it press ⌘V in the app you were using. Without it, selecting an item
-   still copies it to the clipboard; you just paste by hand.
-   System Settings → Privacy & Security → Accessibility → enable ClipStash.
-5. Press **⌃V** (Control + V) and start using it.
+- On first launch ClipStash asks for **Accessibility** access. This is what
+  lets it press ⌘V in the app you were using. Without it, selecting an item
+  still copies it to the clipboard; you just paste by hand.
+  System Settings → Privacy & Security → Accessibility → enable ClipStash.
+- Press **⌃V** (Control + V) and start using it.
+- To update later, run the one-line installer again or download the new zip
+  and replace the app. Your history and settings are kept.
 
 ### Accessibility keeps asking?
 

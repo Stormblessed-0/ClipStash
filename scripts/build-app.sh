@@ -77,6 +77,9 @@ codesign --force --deep --sign - \
 
 ZIP="$DIST/$APP_NAME-$VERSION.zip"
 ditto -c -k --keepParent "$APP" "$ZIP"
+# Stable name so https://github.com/<repo>/releases/latest/download/ClipStash.zip
+# always points at the newest release (used by the README and install.sh).
+cp "$ZIP" "$DIST/$APP_NAME.zip"
 
 echo "✔ Built $APP"
-echo "✔ Packaged $ZIP"
+echo "✔ Packaged $ZIP (and $DIST/$APP_NAME.zip)"

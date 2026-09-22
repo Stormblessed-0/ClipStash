@@ -25,14 +25,22 @@ jobs:
       - name: Publish release
         uses: softprops/action-gh-release@v2
         with:
-          files: dist/ClipStash-*.zip
+          files: dist/*.zip
           generate_release_notes: true
           body: |
             ## Install
-            1. Download `ClipStash-*.zip` below and unzip it.
+
+            **Easiest:** paste this into Terminal. It downloads, installs, and launches ClipStash with no warnings.
+
+            ```
+            curl -fsSL https://raw.githubusercontent.com/Stormblessed-0/ClipStash/main/scripts/install.sh | bash
+            ```
+
+            **Manual:**
+            1. Download `ClipStash.zip` below and unzip it.
             2. Drag **ClipStash.app** into your **Applications** folder.
             3. First launch (the app is not notarized): double-click it, click **Done** on the warning,
                then go to **System Settings → Privacy & Security**, scroll down, and click **Open Anyway**.
-            4. Grant **Accessibility** access when prompted so items paste automatically.
 
-            Press **⌃V** (Control + V) to open your clipboard history.
+            Either way, grant **Accessibility** access when prompted so items paste automatically,
+            then press **⌃V** (Control + V) to open your clipboard history.
