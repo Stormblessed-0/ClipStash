@@ -40,9 +40,15 @@ is no account, no sync, no network access of any kind.
 2. Move **ClipStash.app** to your **Applications** folder. If you are not an
    administrator on your Mac, use `~/Applications` in your home folder instead
    (create it if it does not exist).
-3. The app is not notarized with Apple, so the first launch needs one extra
-   step: **right-click ClipStash.app → Open → Open**. If macOS still refuses,
-   run this once in Terminal (adjust the path if you used `~/Applications`):
+3. The app is not notarized with Apple, so the first launch needs a one-time
+   approval. Double-click ClipStash. macOS says it "could not verify ClipStash
+   is free of malware"; click **Done**. Then open **System Settings → Privacy &
+   Security**, scroll to the bottom, and click **Open Anyway** next to
+   "ClipStash was blocked", then **Open** in the dialog that follows.
+   (On macOS 13 and 14, right-click → Open → Open also works.)
+
+   If you prefer Terminal, this does the same thing and needs no admin rights
+   (adjust the path if you used `~/Applications`):
 
    ```bash
    xattr -dr com.apple.quarantine /Applications/ClipStash.app

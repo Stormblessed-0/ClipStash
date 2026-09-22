@@ -31,7 +31,8 @@ jobs:
             ## Install
             1. Download `ClipStash-*.zip` below and unzip it.
             2. Drag **ClipStash.app** into your **Applications** folder.
-            3. First launch: right-click the app → **Open** → **Open** (the app is not notarized).
+            3. First launch (the app is not notarized): double-click it, click **Done** on the warning,
+               then go to **System Settings → Privacy & Security**, scroll down, and click **Open Anyway**.
             4. Grant **Accessibility** access when prompted so items paste automatically.
 
             Press **⌃V** (Control + V) to open your clipboard history.
